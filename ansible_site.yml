@@ -1,0 +1,23 @@
+---
+- include: vagrant/ansible/site.yml
+
+- hosts: [rvm]
+  roles:
+  - role: rvm_io.rvm1-ruby
+    become: yes
+    when: rvm1_rubies|length > 0
+
+- hosts: [all]
+  tasks:
+  - name: install gem bundler
+    command: "gem install bundler"
+    args:
+      chdir: "/project"
+  - name: bundle install
+    command: "bundle install"
+    args:
+      chdir: "/project" 
+  - name: gem install ruby-debug-ide
+    command: "gem install ruby-debug-ide"
+    args:
+      chdir: "/project"

@@ -1,0 +1,13 @@
+---
+java_product: jdk # jdk vs jre required due to rjb gem
+java_version: 8
+java_shell_profile: true
+
+eclipse_distro: mars 
+eclipse_package: php
+eclipse_plugins_install:
+  - egit
+  - aptana_studio
+
+rvm1_rubies:
+  - ruby-2.1.5
