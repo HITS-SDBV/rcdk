@@ -10,14 +10,14 @@
 - hosts: [all]
   tasks:
   - name: install gem bundler
-    command: "gem install bundler"
+    command: /bin/bash -lc "rvm all do gem install bundler"
     args:
       chdir: "/project"
   - name: bundle install
-    command: "bundle install"
+    command: /bin/bash -lc "rvm all do bundle install"
     args:
       chdir: "/project" 
   - name: gem install ruby-debug-ide
-    command: "gem install ruby-debug-ide"
+    command: /bin/bash -lc "rvm all do gem install ruby-debug-ide"
     args:
       chdir: "/project"

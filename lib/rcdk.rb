@@ -27,15 +27,18 @@ CDK_VERSION = '1.5.11.2'
 
 require 'rcdk/java'
 require "rcdk/version"
+require 'lock_jar'
 
-require_jar File.join(File.dirname(__FILE__), '..', 'java', 'lib', 'cdk-' + CDK_VERSION + '.jar')
+LockJar.load
 
-classpath = '.'
-Dir["#{File.dirname(__FILE__)}/../java/lib/*.jar"].each do |jar|
-  classpath << File::PATH_SEPARATOR + File.expand_path(jar)
-end
+#require_jar File.join(File.dirname(__FILE__), '..', 'java', 'lib', 'cdk-' + CDK_VERSION + '.jar')
 
-Rjb::load(classpath, ['-Djava.awt.headless=true', '-Xms128M', '-Xmx256M'])
+#classpath = '.'
+#Dir["#{File.dirname(__FILE__)}/../java/lib/*.jar"].each do |jar|
+#  classpath << File::PATH_SEPARATOR + File.expand_path(jar)
+#end
+
+#Rjb::load(classpath, ['-Djava.awt.headless=true', '-Xms128M', '-Xmx256M'])
 
 module Rcdk
   # Your code goes here...
