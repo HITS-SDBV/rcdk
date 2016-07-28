@@ -9,5 +9,6 @@ jdk:
 before_install: gem install bundler -v 1.12.5
 install:
   - bundle install --jobs=3 --retry=3
-  - rake jarfile_lock 
+# this should not be necessary, since the gemspec defines the Rakefile as an extension, which triggers this by default
+#  - rake jarfile_lock 
 script: rake test
