@@ -26,8 +26,10 @@ require 'rcdk/java'
 require "rcdk/version"
 require 'lock_jar'
 
-# load all jars defined in Jarfile
-LockJar.load
+#get jarfile relative the gem dir
+lockfile = File.expand_path("../../Jarfile.lock", __FILE__)
+# Loads the ClassPath with Jars from the lockfile
+LockJar.load(lockfile)
 
 module Rcdk
   # Your code goes here...
