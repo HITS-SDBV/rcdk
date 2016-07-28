@@ -22,23 +22,12 @@
 # Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor
 # Boston, MA 02111-1301, USA.
 
-RCDK_VERSION = '0.3.0'
-CDK_VERSION = '1.5.11.2'
-
 require 'rcdk/java'
 require "rcdk/version"
 require 'lock_jar'
 
+# load all jars defined in Jarfile
 LockJar.load
-
-#require_jar File.join(File.dirname(__FILE__), '..', 'java', 'lib', 'cdk-' + CDK_VERSION + '.jar')
-
-#classpath = '.'
-#Dir["#{File.dirname(__FILE__)}/../java/lib/*.jar"].each do |jar|
-#  classpath << File::PATH_SEPARATOR + File.expand_path(jar)
-#end
-
-#Rjb::load(classpath, ['-Djava.awt.headless=true', '-Xms128M', '-Xmx256M'])
 
 module Rcdk
   # Your code goes here...
