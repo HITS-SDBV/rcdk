@@ -45,13 +45,13 @@ M  END"
   def test_smiles_to_png
     output_file = @output_folder.join('chlorobenzene.png').to_path
     Image.smiles_to_png(@chlorbenzene_smiles, output_file, 200, 200)
-    assert File.exists?(output_file)
+    assert File.exist?(output_file)
   end
 
   def test_smiles_to_jpg
     output_file = @output_folder.join('chlorobenzene.jpg').to_path
     Image.smiles_to_jpg(@chlorbenzene_smiles, output_file, 200, 200)
-    assert File.exists?(output_file)
+    assert File.exist?(output_file)
   end
 end
 
