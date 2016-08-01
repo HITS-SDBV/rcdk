@@ -23,13 +23,12 @@
 # Boston, MA 02111-1301, USA.
 
 require 'rcdk/java'
-require "rcdk/version"
+require 'rcdk/version'
 require 'lock_jar'
 
 module Rcdk
-
-  #get jarfile relative the gem dir
-  lockfile = File.expand_path("../../Jarfile.lock", __FILE__)
+  # get jarfile relative the gem dir
+  lockfile = File.expand_path('../../Jarfile.lock', __FILE__)
 
   # Loads the ClassPath with Jars from the lockfile
   LockJar.load(lockfile)
