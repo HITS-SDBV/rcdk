@@ -23,46 +23,18 @@
 # Boston, MA 02111-1301, USA.
 
 require 'rubygems'
-
 require 'rjb'
-# Adds the fully-qualified path <tt>path_to_jarfile</tt> to the <tt>
-# CLASSPATH</tt> environment variable. Any jarfiles added after the
-# first invocation of a Java constructor will be globally ignored, i.e., <tt>
-# require</tt> all jarfiles first in your program before constructing
-# objects from them.
-def require_jar(path_to_jarfile)
-  if classpath_set?
-    ENV['CLASSPATH'] = ENV['CLASSPATH'] + File::PATH_SEPARATOR + path_to_jarfile
-  else
-    ENV['CLASSPATH'] = path_to_jarfile
-  end
-end
-
-private  
-
-# Returns false if the <tt>CLASSPATH</tt> variable is either null or
-# empty, or otherwise true.
-def classpath_set?
-  if !ENV['CLASSPATH']
-    return false
-  elsif ''.eql?(ENV['CLASSPATH'])
-    return false
-  end
-  
-  true
-end
 
 module Kernel
-
   # Maps the packages and class name specified by <tt>qualified_class_name</tt>
   # to a nested set of Ruby modules. The first letter of each module name is
   # capitalized. For example, <tt>java.util.HashMap</tt> would become <tt>
   # Java::Util::HashMap</tt>.
-  # 
+  #
   # The first use of <tt>jrequire</tt> will render all subsequent calls
   # to <tt>require_jar</tt> ineffective.
   def jrequire(qualified_class_name)
-    java_class = Rjb::import(qualified_class_name)
+    java_class = Rjb.import(qualified_class_name)
     package_names = qualified_class_name.to_s.split('.')
     java_class_name = package_names.delete(package_names.last)
     new_module = self.class
@@ -81,6 +53,6 @@ module Kernel
 
     new_module.const_set(java_class_name, java_class)
 
-    return true
+    true
   end
 end
