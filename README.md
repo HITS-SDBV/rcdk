@@ -6,7 +6,7 @@ RCDK makes it possible to use the Chemistry Development Kit (CDK) from Ruby. [CD
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rcdk', '0.3.1', :git => "https://github.com/HITS-SDBV/rcdk.git"
+gem 'rcdk', :git => "https://github.com/HITS-SDBV/rcdk.git", :version => "v0.4.0"
 ```
 
 And then execute:
