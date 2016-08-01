@@ -75,7 +75,7 @@ module RCDK
     class Lang
       include Org::Openscience::Cdk
       include Org::Openscience::Cdk::Silent
-      @@smiles_parser = Smiles::SmilesParser.new(SilentChemObjectBuilder.getInstance())
+      @@smiles_parser = Smiles::SmilesParser.new(SilentChemObjectBuilder.getInstance)
       #@@smiles_generator = Smiles::SmilesGenerator.new(DefaultChemObjectBuilder.getInstance)
       # Returns a CDK <tt>Molecule</tt> by parsing <tt>smiles</tt>.
       def self.read_smiles(smiles)
@@ -98,26 +98,26 @@ module RCDK
       def self.coordinate_molecule(molecule)
         if ConnectivityChecker.isConnected(molecule)
           @@sdg.setMolecule(molecule, false)
-          @@sdg.generateCoordinates()
+          @@sdg.generateCoordinates
           atom_container = @@sdg.getMolecule
           @@overlap_resolver.resolveOverlap(atom_container, nil)
           atom_container
         else
           moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule)
-          double_class = Rjb::import("java.awt.geom.Rectangle2D$Double")
+          double_class = Rjb.import("java.awt.geom.Rectangle2D$Double")
           origin_rect = double_class.new(0, 0, 0, 0)
-          hoffset = origin_rect.getHeight()/2.0
+          hoffset = origin_rect.getHeight / 2.0
           translated_rect = double_class.new(0, 0, 0, 0)
 
           molecules = AtomContainerSet.new
 
-          container_count = moleculeSet.getAtomContainerCount()
+          container_count = moleculeSet.getAtomContainerCount
           (0..container_count-1).to_a.each do |c|
             mol = moleculeSet.getAtomContainer(c)
             #add Hydrogens only when the molecule has no bond
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol) unless mol.bonds.iterator.hasNext
             @@sdg.setMolecule(mol, false)
-            @@sdg.generateCoordinates()
+            @@sdg.generateCoordinates
             atom_container = @@sdg.getMolecule
             @@overlap_resolver.resolveOverlap(atom_container, nil)
             new_mol = translate_molecule(atom_container, origin_rect, translated_rect, hoffset)
@@ -130,10 +130,10 @@ module RCDK
 
       def self.translate_molecule(molecule, origin_rect, translated_rect, hoffset)
         mol_rect = Geometry::GeometryTools.getRectangle2D(molecule)
-        origin_rect.setRect(origin_rect.getX(), origin_rect.getY(), 1 + origin_rect.getWidth() + (mol_rect.getWidth()==0 ? 1.5 : mol_rect.getWidth()), mol_rect.getHeight()> origin_rect.getHeight() ? mol_rect.getHeight() : origin_rect.getHeight())
+        origin_rect.setRect(origin_rect.getX, origin_rect.getY, 1 + origin_rect.getWidth + (mol_rect.getWidth.zero? ? 1.5 : mol_rect.getWidth), mol_rect.getHeight > origin_rect.getHeight ? mol_rect.getHeight : origin_rect.getHeight)
         mol_rect = Geometry::GeometryTools.getRectangle2D(molecule)
-        Geometry::GeometryTools.translate2D(molecule, -mol_rect.getX() + translated_rect.getX() + translated_rect.getWidth(), -mol_rect.getY() + translated_rect.getY() + hoffset - (mol_rect.getHeight()/2.0))
-        translated_rect.setRect(translated_rect.getX(), translated_rect.getY(), 1 + translated_rect.getWidth() + (mol_rect.getWidth()==0 ? 1.5 : mol_rect.getWidth()), mol_rect.getHeight()> translated_rect.getHeight() ? mol_rect.getHeight() : translated_rect.getHeight())
+        Geometry::GeometryTools.translate2D(molecule, -mol_rect.getX + translated_rect.getX + translated_rect.getWidth, -mol_rect.getY + translated_rect.getY + hoffset - (mol_rect.getHeight / 2.0))
+        translated_rect.setRect(translated_rect.getX, translated_rect.getY, 1 + translated_rect.getWidth + (mol_rect.getWidth.zero? ? 1.5 : mol_rect.getWidth), mol_rect.getHeight > translated_rect.getHeight ? mol_rect.getHeight : translated_rect.getHeight)
         molecule
       end
     end
@@ -167,18 +167,18 @@ module RCDK
         renderer_class = molecule._classname == "org.openscience.cdk.AtomContainerSet" ? MoleculeSetRenderer : AtomContainerRenderer
         renderer = renderer_class.new(generators, AWTFontManager.new)
         renderer.setup(molecule, drawArea)
-        #model = renderer.getRenderer2DModel()
+        #model = renderer.getRenderer2DModel
         #model.set(BasicBondGenerator.BondWidth.class, 5.0)
 
         diagram = renderer.calculateDiagramBounds(molecule)
         renderer.setZoomToFit(drawArea.width, drawArea.height, diagram.width, diagram.height)
 
-        g2 = image.getGraphics()
+        g2 = image.getGraphics
         g2.setColor(Color.WHITE)
         g2.fillRect(0, 0, width, height)
         renderer.paint(molecule, AWTDrawVisitor.new(g2))
 
-        ImageIO.write(image, "PNG", Rjb::import('java.io.File').new(path_to_png))
+        ImageIO.write(image, "PNG", Rjb.import('java.io.File').new(path_to_png))
       end
 
       def self.writeJPG(molecule, width, height, path_to_jpg)
@@ -195,11 +195,11 @@ module RCDK
         diagram = renderer.calculateDiagramBounds(molecule)
         renderer.setZoomToFit(drawArea.width, drawArea.height, diagram.width, diagram.height)
 
-        g2 = image.getGraphics()
+        g2 = image.getGraphics
         g2.setColor(Color.WHITE)
         g2.fillRect(0, 0, width, height)
         renderer.paint(molecule, AWTDrawVisitor.new(g2))
-        ImageIO.write(image, "jpg", Rjb::import('java.io.File').new(path_to_jpg))
+        ImageIO.write(image, "jpg", Rjb.import('java.io.File').new(path_to_jpg))
       end
 
       # Writes a <tt>width</tt> by <tt>height</tt> PNG image to
@@ -211,7 +211,6 @@ module RCDK
         self.writePNG(mol, width, height, path_to_png)
       end
 
-
       # Writes a <tt>width</tt> by <tt>height</tt> JPG image to
       # <tt>path_to_jpg</tt> using <tt>smiles</tt>. Coordinates are automatically
       # assigned.
@@ -220,8 +219,6 @@ module RCDK
 
         self.writeJPG(mol, width, height, path_to_jpg)
       end
-
-
     end
   end
 end
