@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/HITS-SDBV/rcdk.svg?branch=master)](https://travis-ci.org/HITS-SDBV/rcdk)
+
 # Rcdk - The Ruby Interface for the Chemistry Development Kit (CDK)
 RCDK makes it possible to use the Chemistry Development Kit (CDK) from Ruby. [CDK](https://sourceforge.net/projects/cdk/) is a Java library for chemical informatics.
 
